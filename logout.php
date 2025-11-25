@@ -2,6 +2,8 @@
 session_start();
 session_unset();
 session_destroy();
-header("Location: login.php");
+
+// Chuyển về trang chủ (index.php) thay vì login.php
+header("Location: index.php");
 exit();
 ?>

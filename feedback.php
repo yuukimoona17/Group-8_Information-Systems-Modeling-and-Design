@@ -1,6 +1,14 @@
 <?php
-// feedback.php
-include 'user_header.php'; 
+// ...
+session_start(); // Nếu file chưa có session_start
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['flash_message'] = "Please login to access this feature.";
+    $_SESSION['flash_message_type'] = "warning";
+    header("Location: login.php");
+    exit();
+}
+// ...
+include 'user_header.php';
 ?>
 
 <h1 class="mb-4">Send Feedback or Report</h1>

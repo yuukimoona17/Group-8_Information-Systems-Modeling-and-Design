@@ -13,12 +13,15 @@ $result = $stmt->get_result();
 
 if ($result->num_rows === 1) {
     $user = $result->fetch_assoc();
-    if (password_verify($password, $user['password'])) {
-        // Đăng nhập thành công
+    
+    // Chấp nhận cả pass đã mã hóa VÀ pass thường (để fix lỗi dữ liệu cũ)
+    if (password_verify($password, $user['password']) || $password === $user['password']) {
+        
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
 
+        // Phân quyền chuyển hướng
         if ($user['role'] === 'admin') {
             header("Location: admin_dashboard.php");
         } elseif ($user['role'] === 'driver') {
@@ -30,11 +33,8 @@ if ($result->num_rows === 1) {
     }
 }
 
-// --- SỬA TỪ ĐÂY ---
-// Thay vì echo, ta gán lỗi vào session và quay lại login.php
 $_SESSION['flash_message'] = "Invalid username or password.";
 $_SESSION['flash_message_type'] = "danger";
 header("Location: login.php");
 exit();
-// --- KẾT THÚC SỬA ---
 ?>

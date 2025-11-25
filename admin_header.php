@@ -5,51 +5,62 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 $current_page = basename($_SERVER['PHP_SELF']);
+include 'db.php';
+// Get avatar
+$sql = "SELECT profile_picture_path FROM users WHERE user_id = ?";
+$stmt = $conn->prepare($sql); $stmt->bind_param("i", $_SESSION['user_id']); $stmt->execute();
+$_SESSION['profile_picture'] = $stmt->get_result()->fetch_assoc()['profile_picture_path'] ?? 'uploads/default_avatar.png';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <style>
-        body { display: flex; min-height: 100vh; background-color: #f8f9fa; }
-        .sidebar { width: 280px; background-color: #212529; color: white; }
-        .main-content { flex-grow: 1; padding: 30px; }
-    </style>
+    <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
 </head>
-<body>
-    <div class="sidebar d-flex flex-column p-3">
-        <a href="admin_dashboard.php" class="d-flex align-items-center mb-3 text-white text-decoration-none"><i class="bi bi-bus-front-fill me-2"></i><span class="fs-4">BusAdmin</span></a>
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-            <li><a href="admin_dashboard.php" class="nav-link <?php echo ($current_page == 'admin_dashboard.php') ? 'active' : 'text-white'; ?>"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
-            <li><a href="admin_routes.php" class="nav-link <?php echo ($current_page == 'admin_routes.php' || $current_page == 'edit_route.php') ? 'active' : 'text-white'; ?>"><i class="bi bi-card-list me-2"></i> Route Management</a></li>
-            <li><a href="admin_bus_stops.php" class="nav-link <?php echo ($current_page == 'admin_bus_stops.php' || $current_page == 'edit_stop.php') ? 'active' : 'text-white'; ?>"><i class="bi bi-geo-alt-fill me-2"></i> Bus Stop Management</a></li>
-            <li><a href="admin_itineraries.php" class="nav-link <?php echo ($current_page == 'admin_itineraries.php' || $current_page == 'manage_itinerary_detail.php') ? 'active' : 'text-white'; ?>"><i class="bi bi-sign-turn-right-fill me-2"></i> Itinerary Management</a></li>
-            <hr>
-            <li class="nav-item"><a href="admin_vehicles.php" class="nav-link <?php echo ($current_page == 'admin_vehicles.php' || $current_page == 'edit_vehicle.php') ? 'active' : 'text-white'; ?>"><i class="bi bi-truck-front me-2"></i> Vehicle Management</a></li>
-            <li class="nav-item"><a href="admin_staff.php" class="nav-link <?php echo ($current_page == 'admin_staff.php' || $current_page == 'edit_staff.php') ? 'active' : 'text-white'; ?>"><i class="bi bi-person-badge me-2"></i> Staff Management</a></li>
-            <li class="nav-item"><a href="admin_schedules.php" class="nav-link <?php echo ($current_page == 'admin_schedules.php') ? 'active' : 'text-white'; ?>"><i class="bi bi-calendar-week me-2"></i> Schedule Management</a></li>
-            <hr>
-            <li class="nav-item"><a href="admin_feedback.php" class="nav-link <?php echo ($current_page == 'admin_feedback.php') ? 'active' : 'text-white'; ?>"><i class="bi bi-chat-left-quote-fill me-2"></i> User Feedback</a></li>
-            
-            <li class="nav-item"><a href="admin_lost_and_found.php" class="nav-link <?php echo ($current_page == 'admin_lost_and_found.php') ? 'active' : 'text-white'; ?>"><i class="bi bi-box-fill me-2"></i> Lost & Found</a></li>
-            <li><a href="admin_announcements.php" class="nav-link <?php echo ($current_page == 'admin_announcements.php') ? 'active' : 'text-white'; ?>"><i class="bi bi-megaphone-fill me-2"></i> Announcements</a></li>
-            <li><a href="admin_users.php" class="nav-link <?php echo ($current_page == 'admin_users.php') ? 'active' : 'text-white'; ?>"><i class="bi bi-people-fill me-2"></i> User Management</a></li>
-            <li><a href="chat.php" class="nav-link <?php echo ($current_page == 'chat.php') ? 'active' : 'text-white'; ?>"><i class="bi bi-chat-dots-fill me-2"></i> Chat</a></li>
-        </ul>
-        <hr>
-        <div class="dropdown">
-             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
-                <i class="bi bi-person-circle me-2"></i>
-                <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="main-content">
+<body class="admin-page"> <div class="admin-wrapper">
+        <nav class="admin-sidebar">
+            <div class="p-4 border-bottom border-secondary border-opacity-10 text-center">
+                <a href="admin_dashboard.php" class="text-decoration-none text-white">
+                    <h4 class="m-0 fw-bold" style="font-family: 'Poppins', sans-serif;">BusAdmin</h4>
+                </a>
+            </div>
+            <div class="py-3 flex-grow-1">
+                <div class="px-4 mb-2 text-secondary fw-bold small text-uppercase">Core</div>
+                <a href="admin_dashboard.php" class="admin-nav-link <?php echo ($current_page == 'admin_dashboard.php') ? 'active' : ''; ?>"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                <a href="admin_routes.php" class="admin-nav-link <?php echo strpos($current_page, 'route') !== false ? 'active' : ''; ?>"><i class="bi bi-map"></i> Routes</a>
+                <a href="admin_bus_stops.php" class="admin-nav-link <?php echo strpos($current_page, 'stop') !== false ? 'active' : ''; ?>"><i class="bi bi-geo-alt"></i> Bus Stops</a>
+                <a href="admin_itineraries.php" class="admin-nav-link <?php echo strpos($current_page, 'itinerar') !== false ? 'active' : ''; ?>"><i class="bi bi-signpost-split"></i> Itineraries</a>
+                
+                <div class="px-4 mt-4 mb-2 text-secondary fw-bold small text-uppercase">Manage</div>
+                <a href="admin_vehicles.php" class="admin-nav-link <?php echo strpos($current_page, 'vehicle') !== false ? 'active' : ''; ?>"><i class="bi bi-truck-front"></i> Vehicles</a>
+                <a href="admin_staff.php" class="admin-nav-link <?php echo strpos($current_page, 'staff') !== false ? 'active' : ''; ?>"><i class="bi bi-person-badge"></i> Staff</a>
+                <a href="admin_schedules.php" class="admin-nav-link <?php echo strpos($current_page, 'schedule') !== false ? 'active' : ''; ?>"><i class="bi bi-calendar-week"></i> Schedules</a>
+                
+                <a href="admin_manage_tickets.php" class="admin-nav-link <?php echo strpos($current_page, 'ticket') !== false ? 'active' : ''; ?>">
+                    <i class="bi bi-ticket-detailed"></i> Monthly Tickets
+                </a>
+
+                <div class="px-4 mt-4 mb-2 text-secondary fw-bold small text-uppercase">System</div>
+                <a href="admin_feedback.php" class="admin-nav-link <?php echo strpos($current_page, 'feedback') !== false ? 'active' : ''; ?>"><i class="bi bi-chat-left-text"></i> Feedback</a>
+                <a href="admin_lost_and_found.php" class="admin-nav-link <?php echo strpos($current_page, 'lost') !== false ? 'active' : ''; ?>"><i class="bi bi-box-seam"></i> Lost & Found</a>
+                <a href="admin_announcements.php" class="admin-nav-link <?php echo strpos($current_page, 'announcement') !== false ? 'active' : ''; ?>"><i class="bi bi-megaphone"></i> News</a>
+                <a href="chat.php" class="admin-nav-link <?php echo $current_page == 'chat.php' ? 'active' : ''; ?>"><i class="bi bi-chat-dots"></i> Chat</a>
+                <a href="admin_users.php" class="admin-nav-link <?php echo strpos($current_page, 'user') !== false ? 'active' : ''; ?>"><i class="bi bi-people"></i> Users</a>
+            </div>
+            <div class="p-3 border-top border-secondary border-opacity-10 bg-black bg-opacity-20">
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                        <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" class="rounded-circle me-2 border border-secondary" width="32" height="32" style="object-fit: cover;">
+                        <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                        <li><a class="dropdown-item text-danger" href="logout.php">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="admin-main">

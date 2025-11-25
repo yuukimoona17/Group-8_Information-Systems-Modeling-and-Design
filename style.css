@@ -1,34 +1,1292 @@
-/* File: style.css */
+/* === IMPORT FONT === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary: #3b82f6;
+    --secondary: #8b5cf6;
+    --dark-bg: #0f172a;
+    --glass-bg: rgba(30, 41, 59, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --text-color: #e2e8f0;
+    --sidebar-width: 260px;
+}
+
+/* === GLOBAL === */
 body {
-    background-color: #1a1a2e !important;
+    font-family: 'Inter', sans-serif !important;
+    background-image: linear-gradient(rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9)),
+        url('img/bg-main.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--text-color);
+    min-height: 100vh;
+    margin: 0;
+    display: block !important;
 }
-.auth-card {
-    margin-top: 10vh;
-}
-.card {
-    background-color: #16213e !important;
-    border: none !important;
-    border-radius: 15px !important;
-}
-.card-header {
-    background-color: #1f2a40 !important;
-    border-bottom: 1px solid #2a3b5c !important;
-    color: #e0e0e0 !important;
-    font-size: 1.5rem !important;
-    font-weight: bold;
-    border-top-left-radius: 15px !important;
-    border-top-right-radius: 15px !important;
-}
-.form-control {
-    background-color: #2a3b5c !important;
-    border: 1px solid #404060 !important;
-    color: #e0e0e0 !important;
-}
-.btn-primary {
-    background-color: #6a8dff !important;
-    border-color: #6a8dff !important;
-    font-weight: bold;
-}
+
 a {
-    color: #8da4ff !important;
+    text-decoration: none !important;
+    transition: 0.3s;
 }
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+/* === ADMIN LAYOUT === */
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    width: var(--sidebar-width) !important;
+    background: rgba(15, 23, 42, 0.98) !important;
+    border-right: 1px solid var(--glass-border);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.admin-main {
+    flex-grow: 1;
+    margin-left: var(--sidebar-width);
+    padding: 2rem;
+    width: calc(100% - var(--sidebar-width));
+}
+
+.admin-nav-link {
+    padding: 12px 24px;
+    color: #94a3b8 !important;
+    display: flex;
+    align-items: center;
+    border-left: 3px solid transparent;
+}
+
+.admin-nav-link:hover,
+.admin-nav-link.active {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff !important;
+    border-left-color: var(--primary);
+}
+
+.stats-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem !important;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    margin-bottom: 1rem;
+}
+
+.stats-icon {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+}
+
+/* === USER UI === */
+
+/* Navbar */
+.navbar {
+    background: rgba(15, 23, 42, 0.95) !important;
+    border-bottom: 1px solid var(--glass-border);
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+    backdrop-filter: blur(12px);
+}
+
+.navbar-brand {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    background: linear-gradient(to right, #60a5fa, #c084fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+}
+
+/* Hero */
+.hero-section {
+    position: relative;
+    height: 400px;
+    background: url('img/banner-hero.jpg') center/cover no-repeat;
+    border-radius: 0 0 40px 40px;
+    margin-bottom: 100px;
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.95));
+    border-radius: 0 0 40px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-content {
+    text-align: center;
+    margin-top: -60px;
+    z-index: 2;
+}
+
+.hero-title {
+    font-weight: 800;
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Search Box */
+.search-tabs-container {
+    background: rgba(30, 41, 59, 0.9);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2rem;
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 900px;
+    z-index: 100;
+    box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.6);
+}
+
+.nav-pills .nav-link {
+    color: #94a3b8;
+    font-weight: 600;
+    border-radius: 30px;
+    padding: 10px 25px;
+    transition: 0.3s;
+}
+
+.nav-pills .nav-link.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+/* SERVICE CARDS */
+.service-card {
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.7));
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    display: block;
+    color: #fff !important;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    background: rgba(40, 55, 80, 0.9);
+    border-color: var(--primary);
+    box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.3);
+}
+
+.service-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem;
+    color: var(--secondary);
+    border: 1px solid var(--glass-border);
+}
+
+.service-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.service-desc {
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+/* NEWS & ROUTES */
+.news-card,
+.route-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    transition: 0.3s;
+}
+
+.news-card:hover,
+.route-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+.news-img-wrapper {
+    height: 200px;
+    overflow: hidden;
+}
+
+.news-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.news-card:hover .news-img {
+    transform: scale(1.1);
+}
+
+.news-body {
+    padding: 1.5rem;
+}
+
+.route-card {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.route-badge {
+    background: var(--primary);
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    min-width: 60px;
+    text-align: center;
+}
+
+/* FORM */
+.form-control {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: #fff !important;
+    padding: 12px 15px !important;
+    border-radius: 10px !important;
+}
+
+.form-control:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25) !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-weight: 600;
+}
+
+/* FOOTER */
+.site-footer {
+    background: rgba(11, 17, 32, 0.95);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 0 2rem;
+    margin-top: 4rem;
+    position: relative;
+    z-index: 10;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.footer-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+    position: relative;
+    display: inline-block;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 40px;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+/* Developer Card */
+.developer-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.developer-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+}
+
+.social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    margin: 0 8px;
+    font-size: 1.2rem;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-btn.facebook:hover {
+    background: #1877F2;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(24, 119, 242, 0.6);
+    border-color: #1877F2;
+}
+
+.social-btn.instagram:hover {
+    background: radial-gradient(circle at 30% 107%,
+            #fdf497 0%,
+            #fdf497 5%,
+            #fd5949 45%,
+            #d62976 60%,
+            #285AEB 90%);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(214, 41, 118, 0.6);
+    border-color: transparent;
+}
+
+/* Contact List */
+.contact-list li {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-start;
+    color: #94a3b8;
+    font-size: 0.95rem;
+}
+
+.contact-list i {
+    color: var(--primary);
+    margin-right: 12px;
+    font-size: 1.1rem;
+    margin-top: 3px;
+}
+
+/* Fix Itinerary Details */
+.list-group-item {
+    background-color: transparent !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #e2e8f0 !important;
+}
+
+/* Fix Service Card in Search Results */
+.service-card .badge {
+    background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+/* Route Text Left */
+.service-card .service-title,
+.service-card .service-desc {
+    text-align: left !important;
+}
+
+/* Auth */
+.auth-body {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 450px;
+    background: rgba(22, 33, 62, 0.9) !important;
+    border: 1px solid var(--glass-border);
+    border-radius: 24px !important;
+    backdrop-filter: blur(20px);
+}
+
+.btn-back-home {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff !important;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+/* Modal */
+.modal-backdrop {
+    z-index: 1050 !important;
+}
+
+.modal {
+    z-index: 1060 !important;
+}
+
+.modal-content {
+    background-color: #1e293b;
+    color: #fff;
+    border: 1px solid var(--glass-border);
+}
+
+
+
+
+/* === FIND PATH RESULT STYLES (APPENDED) === */
+
+/* Header Box */
+.fp-header-box {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.fp-location {
+    background: rgba(255,255,255,0.05);
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.fp-section-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    border-left: 4px solid currentColor;
+}
+
+/* Card Kết quả */
+.fp-card {
+    background: #1e293b; /* Nền tối */
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+}
+
+.fp-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+.fp-card-body {
+    padding: 25px;
+}
+
+/* Timeline Design */
+.fp-timeline {
+    position: relative;
+    padding-left: 10px;
+}
+
+/* Đường nối dọc */
+.fp-timeline::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    bottom: 15px;
+    left: 24px; /* Căn giữa icon */
+    width: 2px;
+    background: rgba(255,255,255,0.1);
+    z-index: 0;
+}
+
+.fp-step {
+    display: flex;
+    align-items: center; /* Căn giữa icon và text */
+    position: relative;
+    z-index: 1;
+}
+
+.fp-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.9rem;
+    margin-right: 20px;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 5px #1e293b; /* Tạo viền giả để che đường nối */
+}
+
+.fp-content {
+    flex-grow: 1;
+}
+
+.fp-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.fp-value {
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Đường kẻ nối đặc biệt cho Direct Trip */
+.fp-route-line {
+    margin: 15px 0 15px 50px; /* Thụt vào */
+    border-left: 2px dashed rgba(59, 130, 246, 0.5);
+    padding-left: 20px;
+}
+
+.fp-route-badge {
+    display: inline-block;
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+
+
+
+/* === CHAT PRO UI (APPENDED) === */
+
+.chat-wrapper {
+    min-height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+}
+
+/* Khung chính */
+.chat-app-container {
+    width: 100%;
+    max-width: 1100px;
+    height: 80vh;
+    background: rgba(30, 41, 59, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    overflow: hidden;
+}
+
+/* Sidebar (Chỉ hiện cho Admin) */
+.chat-sidebar {
+    width: 320px;
+    background: rgba(15, 23, 42, 0.6);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.user-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.user-item {
+    padding: 12px 15px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    color: #cbd5e1;
+    transition: 0.2s;
+    cursor: pointer;
+    margin-bottom: 5px;
+    border: 1px solid transparent;
+}
+
+.user-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.user-item.active {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: white;
+}
+
+.user-avatar-small {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: #475569;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    margin-right: 12px;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.1);
+}
+
+/* Khu vực Chat Chính */
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Header tên người đang chat */
+.chat-main-header {
+    padding: 15px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(15, 23, 42, 0.4);
+    display: flex;
+    align-items: center;
+    height: 70px;
+}
+
+/* Vùng nội dung tin nhắn */
+.chat-messages-area {
+    flex: 1;
+    padding: 20px 25px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Bong bóng chat */
+.msg-row {
+    display: flex;
+    width: 100%;
+}
+
+.msg-bubble {
+    max-width: 70%;
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    position: relative;
+    word-wrap: break-word;
+    line-height: 1.5;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Tin nhắn của Mình (Phải) */
+.msg-me {
+    justify-content: flex-end;
+}
+
+.msg-me .msg-bubble {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border-radius: 18px 18px 2px 18px; /* Bo tròn trừ góc dưới phải */
+}
+
+/* Tin nhắn của Người khác (Trái) */
+.msg-other {
+    justify-content: flex-start;
+}
+
+.msg-other .msg-bubble {
+    background: #334155;
+    color: #e2e8f0;
+    border-radius: 18px 18px 18px 2px; /* Bo tròn trừ góc dưới trái */
+}
+
+.msg-time {
+    font-size: 0.65rem;
+    opacity: 0.7;
+    margin-top: 5px;
+    display: block;
+    text-align: right;
+}
+
+.msg-sender-name {
+    font-size: 0.7rem;
+    margin-bottom: 4px;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+/* Khu vực nhập liệu */
+.chat-input-area {
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.input-group-glass {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.chat-input-field {
+    background: transparent;
+    border: none;
+    color: white;
+    flex: 1;
+    padding: 10px 20px;
+    outline: none;
+}
+
+.btn-send {
+    width: 45px; height: 45px;
+    border-radius: 50%;
+    background: #3b82f6;
+    border: none;
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    transition: 0.3s;
+}
+
+.btn-send:hover {
+    background: #2563eb;
+    transform: scale(1.05);
+}
+
+/* Scrollbar đẹp cho chat */
+.chat-messages-area::-webkit-scrollbar, .user-list::-webkit-scrollbar {
+    width: 6px;
+}
+.chat-messages-area::-webkit-scrollbar-thumb, .user-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+}
+
+
+
+
+/* === ADMIN DASHBOARD PRO (APPENDED) === */
+
+.dashboard-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 2rem;
+}
+
+/* Card thống kê xịn */
+.stat-card-pro {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.stat-card-pro:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.stat-content h3 {
+    font-size: 2rem; font-weight: 800; margin-bottom: 5px; color: #fff;
+}
+.stat-content p {
+    color: #94a3b8; font-size: 0.9rem; margin: 0; text-transform: uppercase; letter-spacing: 1px;
+}
+
+.stat-icon-box {
+    width: 60px; height: 60px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Màu Gradient cho từng loại icon */
+.bg-gradient-purple { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+.bg-gradient-blue { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+.bg-gradient-green { background: linear-gradient(135deg, #10b981, #34d399); }
+.bg-gradient-orange { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+
+/* Chart & Table Containers */
+.dashboard-panel {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 25px;
+    height: 100%;
+}
+
+.panel-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px; padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.panel-title { font-size: 1.1rem; font-weight: 700; color: white; margin: 0; }
+
+/* Table trong Dashboard */
+.dashboard-table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+.dashboard-table th {
+    text-align: left; color: #94a3b8; font-size: 0.8rem; text-transform: uppercase;
+    padding: 0 15px;
+}
+.dashboard-table td {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 15px; color: #e2e8f0; vertical-align: middle;
+}
+.dashboard-table tr td:first-child { border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
+.dashboard-table tr td:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
+
+.status-dot {
+    height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 8px;
+}
+.dot-success { background-color: #10b981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+.dot-warning { background-color: #f59e0b; box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
+
+
+/* === ADMIN SIDEBAR REDESIGN (MODERN STYLE - FIXED) === */
+
+/* 1. Nền và Khung Sidebar */
+.admin-sidebar {
+    background: rgba(17, 24, 39, 0.95) !important; /* Tối hơn, sâu hơn */
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 2. Logo Brand (BusAdmin) */
+.admin-sidebar .p-4 {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 30px 20px !important;
+    text-align: center;
+}
+
+.admin-sidebar h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+    
+    /* Đã thêm dòng này để fix lỗi cảnh báo */
+    background-clip: text;
+    
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* 3. Tiêu đề nhóm (CORE, MANAGE...) */
+.admin-sidebar .text-uppercase {
+    color: #64748b !important;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    padding-left: 24px;
+    opacity: 0.8;
+}
+
+/* 4. Link Menu (Cái quan trọng nhất) */
+.admin-nav-link {
+    margin: 4px 12px; /* Cách lề 2 bên cho đẹp */
+    padding: 12px 18px;
+    border-radius: 12px; /* Bo tròn nút */
+    border-left: none !important; /* Bỏ cái vạch xanh cũ đi */
+    color: #94a3b8 !important;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+}
+
+/* Icon trong menu */
+.admin-nav-link i {
+    margin-right: 12px;
+    font-size: 1.1rem;
+    width: 24px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+/* Hiệu ứng Hover (Di chuột vào) */
+.admin-nav-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff !important;
+    transform: translateX(5px); /* Dịch sang phải xíu */
+}
+
+.admin-nav-link:hover i {
+    color: var(--primary);
+    transform: scale(1.1);
+}
+
+/* Hiệu ứng Active (Đang chọn) - Làm nổi bật hẳn lên */
+.admin-nav-link.active {
+    background: linear-gradient(135deg, var(--primary), #2563eb);
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); /* Đổ bóng xanh */
+    font-weight: 600;
+}
+
+.admin-nav-link.active i {
+    color: white;
+}
+
+/* 5. Footer User (Góc dưới cùng) */
+.admin-sidebar .bg-black {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    margin-top: auto; /* Đẩy xuống đáy */
+}
+
+.admin-sidebar .dropdown-toggle {
+    padding: 5px 10px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.admin-sidebar .dropdown-toggle:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+
+/* === DRIVER PORTAL STYLES (APPENDED - FIXED) === */
+
+/* Dashboard Header */
+.driver-welcome-card {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Nút chức năng to (Quick Actions) */
+.driver-action-btn {
+    display: block;
+    padding: 25px 20px;
+    border-radius: 16px;
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white !important;
+    text-align: center;
+    transition: 0.3s;
+    height: 100%;
+}
+
+.driver-action-btn:hover {
+    transform: translateY(-5px);
+    background: rgba(59, 130, 246, 0.2);
+    border-color: #3b82f6;
+}
+
+.driver-action-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    display: block;
+    
+    /* Gradient Text Effect */
+    background: -webkit-linear-gradient(#60a5fa, #a78bfa);
+    background: linear-gradient(to bottom right, #60a5fa, #a78bfa); /* Thêm dòng chuẩn này */
+    
+    /* Fix lỗi cảnh báo ở đây: Thêm dòng background-clip chuẩn */
+    background-clip: text;
+    -webkit-background-clip: text;
+    
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* Fallback */
+}
+
+/* Ticket Validator UI */
+.validator-box {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+}
+
+.validation-result {
+    margin-top: 30px;
+    border-radius: 16px;
+    padding: 20px;
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result-valid {
+    background: linear-gradient(135deg, #064e3b 0%, #10b981 100%);
+    border: 2px solid #34d399;
+}
+
+.result-invalid {
+    background: linear-gradient(135deg, #7f1d1d 0%, #ef4444 100%);
+    border: 2px solid #f87171;
+}
+
+.passenger-photo {
+    width: 120px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 4px solid white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    margin-bottom: 15px;
+}
+
+.result-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+    color: white;
+}
+
+
+
+/* === PROFESSIONAL AUTH UI (APPENDED) === */
+
+.pro-auth-body {
+    background: url('img/bg-main.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+}
+
+.pro-auth-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.85); /* Màu nền tối sang trọng */
+    z-index: 0;
+}
+
+/* Card chung cho cả Login và Register */
+.pro-auth-card {
+    position: relative;
+    z-index: 1;
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    width: 100%;
+}
+
+.card-login-size { max-width: 480px; }
+.card-register-size { max-width: 1000px; } /* Rộng để chia 2 cột */
+
+/* Input Form đẹp */
+.pro-form-group { margin-bottom: 20px; }
+
+.pro-form-control {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #fff !important;
+    height: 52px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.pro-form-control:focus {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15) !important;
+}
+
+.pro-form-label {
+    display: block;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Nút bấm xịn */
+.btn-pro-primary {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    font-weight: 700;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+}
+
+.btn-pro-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.6);
+    color: white;
+}
+
+/* Layout chia cột cho Register */
+.auth-split-layout { display: flex; flex-wrap: wrap; }
+.auth-side-banner {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(37, 99, 235, 0.8)), url('img/banner-hero.jpg');
+    background-size: cover;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+.auth-form-side { padding: 50px; background: rgba(30, 41, 59, 0.4); }
+
+/* Icon trang trí */
+.auth-icon-circle {
+    width: 80px; height: 80px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    backdrop-filter: blur(5px);
+}
+
+/* Checkbox Policy */
+.policy-check .form-check-input {
+    background-color: transparent;
+    border-color: rgba(255,255,255,0.3);
+    cursor: pointer;
+}
+.policy-check .form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+.policy-text { font-size: 0.85rem; color: #94a3b8; }
+.policy-text a { color: var(--primary); font-weight: 600; }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .auth-form-side { padding: 30px 20px; }
+    .auth-side-banner { padding: 40px 20px; text-align: center; align-items: center; }
+}
+
+
+
+/* === FIX INPUT LOGIN VISIBILITY (APPENDED) === */
+
+/* Chỉnh lại màu ô nhập liệu */
+.pro-form-control {
+    color: #ffffff !important; /* Chữ khi gõ màu trắng tinh */
+    background: rgba(255, 255, 255, 0.05) !important; /* Nền trong suốt nhẹ */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important; /* Viền sáng hơn */
+}
+
+/* Chỉnh màu dòng chữ gợi ý (Placeholder) đang bị chìm */
+.pro-form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important; /* Màu trắng mờ dễ nhìn */
+    opacity: 1; /* Fix lỗi mờ trên Firefox */
+}
+
+/* Khi bấm vào ô nhập */
+.pro-form-control:focus {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: #3b82f6 !important; /* Viền xanh khi focus */
+    color: #ffffff !important;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25) !important;
+}
+
+/* Icon bên phải ô nhập */
+.position-relative i {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+

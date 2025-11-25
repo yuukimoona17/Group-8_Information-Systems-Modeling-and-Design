@@ -1,5 +1,5 @@
 <?php
-// send_message_action.php: File để xử lý gửi tin nhắn mới
+// send_message_action.php
 session_start();
 if (!isset($_SESSION['user_id'])) { die("Access Denied"); }
 include 'db.php';

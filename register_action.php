@@ -1,12 +1,36 @@
 <?php
-// Thêm session_start() ở đầu
+// register_action.php - Phiên bản nâng cấp Avatar
 session_start();
 include 'db.php';
 
+// Lấy dữ liệu
 $username = $_POST['username'];
 $password = $_POST['password'];
+$full_name = $_POST['full_name']; 
+$email = $_POST['email']; 
+$phone_number = $_POST['phone_number']; 
 
-// Kiểm tra username
+// Xử lý upload ảnh đại diện (Avatar)
+$profile_picture_path = 'uploads/default_avatar.png'; // Mặc định
+$upload_dir = 'uploads/'; // Thư mục đã tạo ở Bước 2
+
+// Kiểm tra xem file có được upload và không bị lỗi
+if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK) {
+    // Tạo tên file duy nhất để tránh bị ghi đè
+    $file_extension = pathinfo($_FILES['profile_picture']['name'], PATHINFO_EXTENSION);
+    $unique_filename = uniqid('avatar_') . '.' . $file_extension;
+    $target_file_path = $upload_dir . $unique_filename;
+
+    // Di chuyển file từ tmp vào thư mục uploads
+    if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $target_file_path)) {
+        $profile_picture_path = $target_file_path; // Cập nhật đường dẫn nếu thành công
+    } else {
+        // Nếu di chuyển file lỗi, vẫn dùng ảnh mặc định nhưng báo lỗi (hoặc không)
+        // Bỏ qua lỗi, dùng ảnh mặc định
+    }
+}
+
+// Kiểm tra username (giữ nguyên)
 $sql_check = "SELECT user_id FROM users WHERE username = ?";
 $stmt_check = $conn->prepare($sql_check);
 $stmt_check->bind_param("s", $username);
@@ -14,40 +38,31 @@ $stmt_check->execute();
 $result_check = $stmt_check->get_result();
 
 if ($result_check->num_rows > 0) {
-    // --- SỬA CHỖ NÀY ---
-    // die("Error: Username already exists. <a href='register.php'>Go back</a>");
-    // Thay bằng:
-    $_SESSION['flash_message'] = "Error: Username already exists. Please choose another.";
+    $_SESSION['flash_message'] = "Error: Username already exists.";
     $_SESSION['flash_message_type'] = "danger";
     header("Location: register.php");
     exit();
-    // --- KẾT THÚC SỬA ---
 }
+$stmt_check->close();
 
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-$role = 'user'; // Mặc định là user
+$role = 'user'; 
 
-$sql_insert = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+// Cập nhật câu SQL INSERT (thêm 4 cột mới)
+$sql_insert = "INSERT INTO users (username, full_name, email, phone_number, profile_picture_path, password, role) VALUES (?, ?, ?, ?, ?, ?, ?)";
 $stmt_insert = $conn->prepare($sql_insert);
-$stmt_insert->bind_param("sss", $username, $hashed_password, $role);
+// Cập nhật bind_param (sssssss)
+$stmt_insert->bind_param("sssssss", $username, $full_name, $email, $phone_number, $profile_picture_path, $hashed_password, $role);
 
 if ($stmt_insert->execute()) {
-    // --- SỬA CHỖ NÀY ---
-    // echo "Registration successful! <a href='login.php'>You can now login.</a>";
-    // Thay bằng: (chuyển về login.php để báo thành công)
     $_SESSION['flash_message'] = "Registration successful! You can now login.";
     $_SESSION['flash_message_type'] = "success";
     header("Location: login.php");
     exit();
-    // --- KẾT THÚC SỬA ---
 } else {
-    // --- SỬA CHỖ NÀY ---
-    // echo "Error: " . $stmt_insert->error;
-    // Thay bằng:
     $_SESSION['flash_message'] = "Error: Could not register. " . $stmt_insert->error;
     $_SESSION['flash_message_type'] = "danger";
     header("Location: register.php");
     exit();
-    // --- KẾT THÚC SỬA ---
 }
 ?>

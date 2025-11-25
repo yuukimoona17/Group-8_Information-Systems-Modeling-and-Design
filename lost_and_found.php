@@ -1,5 +1,13 @@
 <?php
-// lost_and_found.php
+// ...
+session_start(); // Nếu file chưa có session_start
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['flash_message'] = "Please login to access this feature.";
+    $_SESSION['flash_message_type'] = "warning";
+    header("Location: login.php");
+    exit();
+}
+// ...
 include 'user_header.php';
 include 'db.php';
 
